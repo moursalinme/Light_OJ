@@ -1,39 +1,39 @@
 #include <bits/stdc++.h>
+#define IO ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 
 using namespace std;
 using ll = long long;
+using ull = unsigned long long;
 
-ll ncr(int n, int r) {
-    if(r == 0) return 1;
-    if(r > n/2) ncr(n, n-r);
-    return n*ncr(n-1, r-1) / r;
-}
-
-void solve() 
-{
-    ll n, r;
-    scanf("%lli%lli", &n, &r);
-    if(r > n)   puts("0");
-    else {
-        ll k = n;
-        n = ncr(n, r);
-        n *= n;
-
-        for (int i = 1; i <= r ; ++i) {
-            n *= i;
-        }
-        printf("%lli\n", n);
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    
+    if(k > n) {
+        cout << "0" << endl;
+        return;
     }
+    long long r = k, answer = 1, q = 1;
+    
+    for (int i = 0; i < k; ++i, --n, --r) {
+        answer *= (n*n);
+        q *= r;
+        long long g = __gcd(answer, q);
+        answer /= g;
+        q /= g;
+    }
+    cout << answer/q << endl;
 }
 
 int main() 
 {
-    int t;
-    scanf("%d", &t);
+    IO;
+    int t = 1;
+    cin >> t;
 
     for (int i = 1; i <= t; ++i) {
-        printf("Case %d: ", i);
+        cout << "Case " << i << ": ";
         solve();
-    }
+    }   
     return 0;
 }
