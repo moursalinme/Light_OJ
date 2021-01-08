@@ -58,7 +58,7 @@ int64_t calc (int pos, int64_t sum, bool small, bool start) {
 
 int64_t forn (int64_t _n) {
     if (_n <= 0) {
-        return n == 0 ? 1 : 0;
+        return _n == 0 ? 1 : 0;
     }
     memset(dp, -1, sizeof(dp));
     s = to_string(_n);
