@@ -26,7 +26,7 @@ inline void debug(itrt it, T val, X ..._value) {
 
 int64_t m, n, sz;
 string s;
-int64_t dp[100][100][2][2];
+int64_t dp[12][12][2][2];
 
 int64_t calc (int pos, int64_t sum, bool small, bool start) {
     if (pos == sz) {
