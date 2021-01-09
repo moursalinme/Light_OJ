@@ -30,7 +30,7 @@ def solve () :
     
     ar.sort ()
     cnt = 0
-    k = 0
+    k = 0  
 
     while k < n :
         hi = ub (ar, ar[k] + w)
