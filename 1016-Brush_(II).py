@@ -22,12 +22,12 @@ def ub (ar, n) :
 def solve () :
     s = input()
     n, w = map(int, input ().split ())
-    ar = []
+    ar = [0] * n
     
     for k in range (n) :
         x, y = map (int, input().split())
-        ar.append (y)
-    
+        ar[k] = y
+            
     ar.sort ()
     cnt = 0
     k = 0  
