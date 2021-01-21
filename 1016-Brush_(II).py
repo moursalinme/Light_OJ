@@ -18,7 +18,6 @@ def ub (ar, n) :
         lo += 1
     return lo
 
-
 def solve () :
     s = input()
     n, w = map(int, input ().split ())
