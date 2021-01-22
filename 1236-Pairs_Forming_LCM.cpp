@@ -45,7 +45,7 @@ void solve () {
     if (n != 1) 
         cnt *= 3;
 
-    cout << (cnt + 1) / 2 << endl; // we are counting every pair twice 
+    cout << (cnt + 1) / 2 << endl;
 }
  
 int main() {
