@@ -4,29 +4,20 @@ using namespace std;
 vector<pair<int, int>> tree[30005];
 vector<int> dist1(30005), dist2(30005); 
 bool vis[30005];
-int mxd, mx_node = -1;
-
-int dfs (int n, int dist = 0) {
-    vis[n] = 1;
-    for (auto j : tree[n]) {
-        if (!vis[j.first]) {
-            dfs (j.first, dist + j.second);
-        }
-    }
-    if (dist > mxd) { 
-        mxd = dist;
-        mx_node = n;
-    }
-}
+int n, u, v, w, mxd, mx_node = -1;
 
 int dfs (int n, int dist, vector<int>& ara) {
     vis[n] = 1;
     for (auto j : tree[n]) {
-        if (!vis[j.first]) {
+        if (!vis[j.first]) 
             dfs (j.first, dist + j.second, ara);
-        }
     }
     ara[n] = dist;
+
+    if (dist > mxd) { 
+        mxd = dist;
+        mx_node = n;
+    }
 }
 
 void rset () {
@@ -35,7 +26,6 @@ void rset () {
 }
 
 void solve () {
-    int n, u, v, w;
     cin >> n;
 
     for (int i = 1; i < n; ++i) {
@@ -45,26 +35,16 @@ void solve () {
     }
 
     rset ();
-    dfs (0);
+    dfs (0, 0, dist1);
     int st = mx_node;
     rset ();
-    dfs (st);
-    int end = mx_node;
-
-    rset ();
     dfs (st, 0, dist1);
+    int end = mx_node;
     rset ();
     dfs (end, 0, dist2);
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) 
         cout << max (dist1[i], dist2[i]) << endl;
-    }
-
-    for (int i = 0; i <= n; ++i) {
-        tree[i].clear ();
-        dist1[i] = 0;
-        dist2[i] = 0;
-    }
 }
 
 int main() {
@@ -77,6 +57,13 @@ int main() {
     while (tt--) {
         cout << "Case " << tc++ <<   ":\n";
         solve ();
+        if (tt) {
+            for (int i = 0; i <= n; ++i) {
+                tree[i].clear ();
+                dist1[i] = 0;
+                dist2[i] = 0;
+            }
+        }
     }
     return 0;
 }
