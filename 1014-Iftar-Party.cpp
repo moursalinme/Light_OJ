@@ -16,10 +16,6 @@ void solve (int test_no) {
     i64 total, left; cin >> total >> left;
     i64 eaten = total - left;
 
-    if (!eaten) {
-        cout << " impossible\n";
-        return;
-    }
     set<i64> divs;
     for (i64 i = 1; i * i <= eaten; ++i) {
         if (eaten % i == 0) {
