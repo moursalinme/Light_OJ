@@ -17,7 +17,7 @@ struct SuffixArray {
     vector<int> sa, pos, temp, lcp;
     int n;
 
-    SuffixArray (string _s) {
+    SuffixArray (string _s) { // complexity O(nLog^2(n)) 
         s = _s; s += '$';
         n = s.size();
         sa = pos = temp = vector<int> (n);
@@ -48,7 +48,7 @@ struct SuffixArray {
         }
     }
 
-    void buildLCP () {
+    void buildLCP () { // complexity : O(n)
         lcp.resize(n);
 
         for (int i = 0, k = 0; i < n; ++i) {
