@@ -6,7 +6,7 @@ using namespace std;
 #else
 #define out(...)
 #endif
-
+ 
 #define endl '\n'
 #define ff first
 #define ss second
