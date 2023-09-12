@@ -1,87 +1,83 @@
-#include <iostream>
-#include <set>
-#include <map>
-#include <cmath>
-#include <cstring>
-#include <bitset>
-#include <iterator>
-#include <sstream>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
+
 #ifdef LOCAL
-#define _rp replace (_N.begin(), _N.end(), ',', ' ');
-#define itrt istream_iterator<string>
-#define out(_...) {string _N = #_; _rp; stringstream ss(_N); itrt it(ss);debug(it, _);}
-inline void debug(itrt it) { cerr << endl;}
-template <typename T, typename... X>
-inline void debug(itrt it, T val, X ..._value) {
-    cerr << "[" << *it << ": " << val << "] ";  debug(++it, _value...);
-}
-#else 
-#define out(...)
+#include "debug.h"
+#else
+#define out(...) 
 #endif
 
-int64_t m, n, sz;
-string s;
-int64_t dp[12][12][2][2];
+#define endl '\n'
+#define ff first
+#define ss second
+using i64 = long long;
 
-int64_t calc (int pos, int64_t sum, bool small, bool start) {
-    if (pos == sz) {
-        return sum;
-    }
-    if (dp[pos][sum][small][start] != -1) {
-        return dp[pos][sum][small][start];
-    }
+const int N = 12;
+vector<int> ar;
+int mod;
+int last;
+i64 dp[N][2][2][N];
 
-    int hi = small ? 9 : s[pos] - '0';
-    int64_t ret = 0;
+i64 call (int pos, int small, int placed, int zr) {
 
-    if (start) { // we already started counting, so i can put 0 .
-        for (int i = 0; i <= hi; ++i) { 
-            ret += calc (pos+1, sum + (i == 0), (small | i < hi), 1);
+        if (pos == last) return zr;
+        if (dp[pos][small][placed][zr] != -1) return dp[pos][small][placed][zr];
+
+        i64 ret = 0;
+
+        int limit = ar[pos];
+        if (small) limit = 9;
+
+        for (int i = 0; i <= limit; ++i) {
+                if (placed) ret += call (pos + 1, small | (i < ar[pos]), 1, zr + (i == 0));
+                else ret += call(pos + 1, small | (i < ar[pos]), (i != 0), zr);
         }
-    }
-    else { // we haven't started counting, so we have two options 
-           // 1. start counting now (in this case we can not put 0 in start)
-           // 2. start counting from next pos
 
-        for (int i = 1; i <= hi; ++i) { 
-            ret += calc (pos+1, sum, (small | i < hi), 1);
-        }
-        ret += calc (pos+1, 0, 1, 0);
-    }
-    return dp[pos][sum][small][start] = ret;
+        return dp[pos][small][placed][zr] = ret;
 }
 
-int64_t forn (int64_t _n) {
-    if (_n <= 0) {
-        return _n == 0 ? 1 : 0;
-    }
-    memset(dp, -1, sizeof(dp));
-    s = to_string(_n);
-    sz = s.size();
-    _n = calc (0, 0, 0, 0);
-    return _n + 1;
+void addDigit (i64 n) {
+        if (n == -1) {
+                last = 0;
+                return;
+        }
+        vector<int> v;
+        while (n > 0) {
+                v.push_back(n % 10);
+                n /= 10;
+        }
+        reverse (v.begin(), v.end());
+        ar = v;
+        last = v.size();
+        memset(dp, -1, sizeof dp);
+}
+
+void solve (int testNo) 
+{       
+        i64 a, b; cin >> a >> b;
+
+
+        addDigit(b);
+        i64 ans = call(0, 0, 0, 0) + (a == 0);
+
+        addDigit(a - 1);
+        i64 ans2 = call(0, 0, 0, 0);
+
+        // out(ans, ans2);
+        cout << ans - ans2 << endl;
 }   
 
-void solve () {
-    cin >> m >> n;
-    cout << forn(n) - forn (m-1) << endl;
-}
+signed main() {
+        ios::sync_with_stdio(false); 
+        cin.tie(NULL); 
 
-int main() {    
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
+        int tc = 1;
+        cin >> tc;
 
-    int t = 1, tc = 1;
-    cin >> t;
-
-    while(t--) {
-        cout << "Case " << tc++ << ": ";
-        solve();
-    }
-    return 0;
+        for (int i = 1; i <= tc; ++i) { 
+                cout << "Case " << i << ": ";
+                solve (i);
+        }
+        
+        return 0;
 }
