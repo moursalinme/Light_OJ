@@ -37,7 +37,7 @@ int call (int pos, int sum, int dsum, int small) {
         return dp[pos][sum][dsum][small] = ret;
 }
 
-void addBinary (int n) {
+void addDigit (int n) {
         vector<int> v;
         while (n > 0) {
                 v.push_back(n % 10);
@@ -58,10 +58,10 @@ void solve (int testNo)
         }
         mod = k;
 
-        addBinary(b);
+        addDigit(b);
         int ans = call(0, 0, 0, 0);
 
-        addBinary(a - 1);
+        addDigit(a - 1);
         int ans2 = call(0, 0, 0, 0);
 
         cout << ans - ans2 << endl;
